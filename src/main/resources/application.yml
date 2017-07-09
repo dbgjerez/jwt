@@ -1,0 +1,27 @@
+# Log properties
+logging:
+  level.org.springframework: INFO
+  level.com.dbg: DEBUG
+# Spring properties
+spring:
+  application:
+    name: JWT
+# Discovery Server Access
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://172.17.0.2:8080/eureka, 
+#    registerWithEureka: true
+#    fetchRegistry: true
+# HTTP Server
+server:
+  port: 8081   # HTTP (Tomcat) port
+#turbine:
+#  aggregator:
+#    clusterConfig: ms1
+#    clusterNameExpression: new String("default")
+
+# JWT configuration
+jwt:
+  token: OWFUYjd1Q2Y2Mk5LandXemU2JFZoWFc1LS1GViFnQy05Sy0tM1kyTUIhPW1yI3pILUJaWW5aV2F3djQ9Q0NCQV9MM05FZ3diUCZuNGhaJnBuYUEjKlV0ZlZTa2U2SFZOVUBtUnp6dFI1SmQ3RlFhZmVwP2glVDU2PXhaVjJeZ05WP2pKRmQkUVhfSkBAdF8qS0pWYndWeWgtJXM1WHFUI0AyWF9oalIkdHdSTVJAdENIdWZkdEgya1VMcFdydEx4N3drUlcjLVZoNFZ0TEJiX3VWcG00UiQmN3I4OHZmWXQ4c3dobUs3UnA5cyFCWk5UVEE0UXFNbSRjYkslakY3cQ==
+  expiration: 60 #segundos
