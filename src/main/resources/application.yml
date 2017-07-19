@@ -7,12 +7,12 @@ spring:
   application:
     name: JWT
 # Discovery Server Access
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://172.17.0.2:8080/eureka, 
-#    registerWithEureka: true
-#    fetchRegistry: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka, 
+    registerWithEureka: true
+    fetchRegistry: true
 # HTTP Server
 server:
   port: 8081   # HTTP (Tomcat) port
