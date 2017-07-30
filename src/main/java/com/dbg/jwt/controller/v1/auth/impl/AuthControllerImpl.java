@@ -24,7 +24,7 @@ public class AuthControllerImpl implements AuthController {
 	@Override
 	public ResponseEntity<?> token(@RequestBody LoginDTO login) {
 		// TODO: Validar loginDTO
-		final String token = jwtService.generateToken(login.getName());
+		final String token = jwtService.generateToken(login.getEmail());
 		final GenerateTokenDTO res = new GenerateTokenDTO();
 		res.setAccesstToken(token);
 		return ResponseEntity.ok(res);
