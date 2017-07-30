@@ -12,6 +12,7 @@ import com.dbg.jwt.controller.v1.auth.AuthController;
 import com.dbg.jwt.dto.GenerateTokenDTO;
 import com.dbg.jwt.dto.LoginDTO;
 import com.dbg.jwt.dto.StatusDTO;
+import com.dbg.jwt.exceptions.InvalidUserException;
 import com.dbg.jwt.service.JWTService;
 
 @RestController
@@ -22,11 +23,8 @@ public class AuthControllerImpl implements AuthController {
 	private JWTService jwtService;
 
 	@Override
-	public ResponseEntity<?> token(@RequestBody LoginDTO login) {
-		// TODO: Validar loginDTO
-		final String token = jwtService.generateToken(login.getEmail());
-		final GenerateTokenDTO res = new GenerateTokenDTO();
-		res.setAccesstToken(token);
+	public ResponseEntity<?> token(@RequestBody LoginDTO login) throws InvalidUserException {
+		final GenerateTokenDTO res = jwtService.generateToken(login);
 		return ResponseEntity.ok(res);
 	}
 

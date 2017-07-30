@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dbg.jwt.dto.LoginDTO;
 import com.dbg.jwt.dto.StatusDTO;
+import com.dbg.jwt.exceptions.InvalidUserException;
 
 @RestController
 @RequestMapping(value = "/v1/auth")
 public interface AuthController {
 
 	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<?> token(@RequestBody LoginDTO login);
+	ResponseEntity<?> token(@RequestBody LoginDTO login) throws InvalidUserException;
 
 	@RequestMapping(value = "/validate", method = RequestMethod.GET)
 	StatusDTO validate(HttpServletRequest request);
