@@ -2,9 +2,10 @@ package com.dbg.jwt.service;
 
 import com.dbg.jwt.dto.LoginDTO;
 import com.dbg.jwt.exceptions.InvalidUserException;
+import com.dbg.jwt.model.user.User;
 
 public interface UserService {
 
-	Boolean checkUser(LoginDTO login) throws InvalidUserException;
+	User findUser(LoginDTO login) throws InvalidUserException;
 
 }

@@ -17,11 +17,11 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	public Boolean checkUser(LoginDTO login) throws InvalidUserException {
+	public User findUser(LoginDTO login) throws InvalidUserException {
 		final User user = new User();
 		user.setEmail(login.getEmail());
 		user.setPassword(login.getPassword());
-		return userDao.exists(Example.of(user));
+		return userDao.findOne(Example.of(user)).orElseThrow(() -> new InvalidUserException());
 	}
 
 }
