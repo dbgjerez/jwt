@@ -5,10 +5,15 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.dbg.jwt.dto.GenerateTokenDTO;
+import com.dbg.jwt.dto.LoginDTO;
+import com.dbg.jwt.exceptions.InvalidUserException;
 import com.dbg.jwt.service.JWTService;
+import com.dbg.jwt.service.UserService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -24,6 +29,16 @@ public class JWTServiceImpl implements JWTService {
 
 	@Value("${jwt.expiration}")
 	private Integer expiration;
+
+	@Autowired
+	private UserService userService;
+
+	@Override
+	public GenerateTokenDTO generateToken(LoginDTO login) throws InvalidUserException {
+		userService.findUser(login);
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public String generateToken(String username) {
