@@ -24,7 +24,7 @@ public class AuthControllerImpl implements AuthController {
 
 	@Override
 	public ResponseEntity<?> token(@RequestBody LoginDTO login) throws InvalidUserException {
-		final GenerateTokenDTO res = jwtService.generateToken(login);
+		final GenerateTokenDTO res = jwtService.loginUser(login);
 		return ResponseEntity.ok(res);
 	}
 
