@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.dbg.jwt.dto.GenerateTokenDTO;
 import com.dbg.jwt.dto.LoginDTO;
 import com.dbg.jwt.exceptions.InvalidUserException;
+import com.dbg.jwt.mappers.TokenMapper;
+import com.dbg.jwt.model.user.User;
 import com.dbg.jwt.service.JWTService;
 import com.dbg.jwt.service.UserService;
 
@@ -33,16 +35,19 @@ public class JWTServiceImpl implements JWTService {
 	@Autowired
 	private UserService userService;
 
-	@Override
-	public GenerateTokenDTO generateToken(LoginDTO login) throws InvalidUserException {
-		userService.findUser(login);
-		// TODO Auto-generated method stub
-		return null;
-	}
+	@Autowired
+	private TokenMapper tokenMapper;
 
 	@Override
-	public String generateToken(String username) {
-		return Jwts.builder().claim(Claims.SUBJECT, username)
+	public GenerateTokenDTO loginUser(LoginDTO login) throws InvalidUserException {
+		final User user = userService.findUser(login);
+		final String token = generateToken(user);
+		return tokenMapper.map(token);
+	}
+
+	public String generateToken(final User u) {
+		// FIXME generar tokens con roles de usuarios
+		return Jwts.builder().claim(Claims.SUBJECT, u.getUsername())
 				.claim(Claims.ISSUED_AT, LocalDateTime.now().atZone(DEFAULT_ZONEID).toEpochSecond())
 				.claim(Claims.EXPIRATION, generateExpirationDate().atZone(DEFAULT_ZONEID).toEpochSecond())
 				.signWith(SignatureAlgorithm.HS256, secret).compact();

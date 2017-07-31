@@ -6,7 +6,7 @@ import com.dbg.jwt.exceptions.InvalidUserException;
 
 public interface JWTService {
 
-	GenerateTokenDTO generateToken(LoginDTO login) throws InvalidUserException;
+	GenerateTokenDTO loginUser(LoginDTO login) throws InvalidUserException;
 
 	Boolean validateToken(String token);
 
