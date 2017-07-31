@@ -14,11 +14,31 @@ public class User implements Serializable {
 	@Id
 	private Integer id;
 
+	private String username;
+
 	@Indexed(unique = true)
 	private String email;
 
 	@Indexed
 	private String password;
+
+	private String zoneId;
+
+	public String getZoneId() {
+		return zoneId;
+	}
+
+	public void setZoneId(String zoneId) {
+		this.zoneId = zoneId;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public Integer getId() {
 		return id;
