@@ -11,23 +11,12 @@ public class GenerateTokenDTO implements Serializable {
 	@JsonAlias("access_token")
 	private String accesstToken;
 
-	@JsonAlias("token_type")
-	private String tokenType;
-
 	public String getAccesstToken() {
 		return accesstToken;
 	}
 
 	public void setAccesstToken(String accesstToken) {
 		this.accesstToken = accesstToken;
-	}
-
-	public String getTokenType() {
-		return tokenType;
-	}
-
-	public void setTokenType(String tokenType) {
-		this.tokenType = tokenType;
 	}
 
 }
