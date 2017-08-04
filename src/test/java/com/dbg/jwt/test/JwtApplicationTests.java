@@ -1,4 +1,4 @@
-package com.dbg.jwt;
+package com.dbg.jwt.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
