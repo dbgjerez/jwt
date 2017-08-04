@@ -2,6 +2,7 @@ package com.dbg.jwt.model.user;
 
 import java.io.Serializable;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +13,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = -4750825107858267550L;
 
 	@Id
-	private Integer id;
+	private ObjectId id;
 
 	private String username;
 
@@ -40,11 +41,11 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public Integer getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
