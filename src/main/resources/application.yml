@@ -7,11 +7,24 @@ logging:
 spring:
   application:
     name: JWT
+# MONGODB (MongoProperties)
+  data:
+    mongodb:
+      #authentication-database: # Authentication database name.
+      database: test # Database name.
+      #field-naming-strategy: # Fully qualified name of the FieldNamingStrategy to use.
+      #grid-fs-database= # GridFS database name.
+      host: localhost # Mongo server host. Cannot be set with uri.
+      #password: # Login password of the mongo server. Cannot be set with uri.
+      port: 27017 # Mongo server port. Cannot be set with uri.
+      #repositories.enabled=true # Enable Mongo repositories.
+      #spring.data.mongodb.uri=mongodb://localhost/test # Mongo database URI. Cannot be set with host, port and credentials.
+      #spring.data.mongodb.username= # Login user of the mongo server. Cannot be set with uri.
 # Discovery Server Access
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8080/eureka, 
+      defaultZone: http://localhost:8080/eureka
     registerWithEureka: true
     fetchRegistry: true
 # HTTP Server
@@ -26,5 +39,3 @@ server:
 jwt:
   token: OWFUYjd1Q2Y2Mk5LandXemU2JFZoWFc1LS1GViFnQy05Sy0tM1kyTUIhPW1yI3pILUJaWW5aV2F3djQ9Q0NCQV9MM05FZ3diUCZuNGhaJnBuYUEjKlV0ZlZTa2U2SFZOVUBtUnp6dFI1SmQ3RlFhZmVwP2glVDU2PXhaVjJeZ05WP2pKRmQkUVhfSkBAdF8qS0pWYndWeWgtJXM1WHFUI0AyWF9oalIkdHdSTVJAdENIdWZkdEgya1VMcFdydEx4N3drUlcjLVZoNFZ0TEJiX3VWcG00UiQmN3I4OHZmWXQ4c3dobUs3UnA5cyFCWk5UVEE0UXFNbSRjYkslakY3cQ==
   expiration: 60 #segundos
-  
-# MongoDB config
