@@ -2,7 +2,6 @@ package com.dbg.jwt.service.impl;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import com.dbg.jwt.exceptions.InvalidUserException;
 import com.dbg.jwt.mappers.TokenMapper;
 import com.dbg.jwt.model.user.User;
 import com.dbg.jwt.service.JWTService;
+import com.dbg.jwt.service.LocalDateTimeService;
 import com.dbg.jwt.service.UserService;
 
 import io.jsonwebtoken.Claims;
@@ -38,6 +38,9 @@ public class JWTServiceImpl implements JWTService {
 	@Autowired
 	private TokenMapper tokenMapper;
 
+	@Autowired
+	private LocalDateTimeService dateService;
+
 	@Override
 	public GenerateTokenDTO loginUser(LoginDTO login) throws InvalidUserException {
 		final User user = userService.findUser(login);
@@ -45,12 +48,16 @@ public class JWTServiceImpl implements JWTService {
 		return tokenMapper.map(token);
 	}
 
-	public String generateToken(final User u) {
+	private String generateToken(final User u) {
 		// FIXME generar tokens con roles de usuarios
-		return Jwts.builder().claim(Claims.SUBJECT, u.getUsername())
-				.claim(Claims.ISSUED_AT, LocalDateTime.now().atZone(DEFAULT_ZONEID).toEpochSecond())
-				.claim(Claims.EXPIRATION, generateExpirationDate().atZone(DEFAULT_ZONEID).toEpochSecond())
+		final LocalDateTime now = dateService.now();
+		return Jwts.builder().claim(Claims.SUBJECT, u.getUsername()).claim(Claims.ISSUED_AT, toEpoch(now))
+				.claim(Claims.EXPIRATION, toEpoch(dateService.plusSeconds(now, expiration)))
 				.signWith(SignatureAlgorithm.HS256, secret).compact();
+	}
+
+	private Long toEpoch(LocalDateTime date) {
+		return date.atZone(DEFAULT_ZONEID).toEpochSecond();
 	}
 
 	@Override
@@ -67,10 +74,6 @@ public class JWTServiceImpl implements JWTService {
 
 	private Claims extractClaims(String token) {
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-	}
-
-	private LocalDateTime generateExpirationDate() {
-		return LocalDateTime.now().plus(expiration, ChronoUnit.SECONDS);
 	}
 
 }
