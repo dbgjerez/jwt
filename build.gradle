@@ -13,13 +13,14 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'jacoco'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
-
+targetCompatibility = 1.8
 
 ext {
 	springCloudVersion = 'Finchley.M1'
@@ -29,6 +30,21 @@ repositories {
 	mavenCentral()
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
+    }
 }
 
 dependencies {
