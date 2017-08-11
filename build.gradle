@@ -26,6 +26,10 @@ ext {
 	springCloudVersion = 'Finchley.M1'
 }
 
+test {
+	systemProperty 'user.timezone', 'Europe/Madrid'
+}
+
 repositories {
 	mavenCentral()
 	maven { url "https://repo.spring.io/snapshot" }
