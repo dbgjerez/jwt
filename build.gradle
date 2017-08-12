@@ -12,28 +12,57 @@ buildscript {
 	}
 }
 
-apply plugin: 'java'
-apply plugin: 'jacoco'
-apply plugin: 'eclipse'
+allprojects {
+
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	
+	group = 'com.dbg.jwt'
+	sourceCompatibility = 1.8
+	
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	
+	dependencies {
+		compile('org.projectlombok:lombok:1.16.18')
+	}
+	
+	test {
+		systemProperty 'user.timezone', 'Europe/Madrid'
+	}
+
+}
+
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
 
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+version = '0.0.1-SNAPSHOT'	
 
 ext {
 	springCloudVersion = 'Finchley.M1'
 }
 
-test {
-	systemProperty 'user.timezone', 'Europe/Madrid'
+dependencies {
+	
+	compile			('org.springframework.boot:spring-boot-starter-web')
+	compile			('org.springframework.data:spring-data-mongodb')
+	compile			('org.springframework.cloud:spring-cloud-starter-eureka')
+	compile			('io.jsonwebtoken:jjwt:0.6.0')
+	compile			('com.auth0:java-jwt:3.2.0')
+	compile project (':jwt-dto')
+	
+	testCompile		('org.springframework.boot:spring-boot-starter-test')
+	testCompile		('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 }
 
-repositories {
-	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 jacocoTestReport {
@@ -45,23 +74,14 @@ jacocoTestReport {
 
 check.dependsOn jacocoTestReport
 
-dependencies {
-	
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.data:spring-data-mongodb')
-	compile('org.springframework.cloud:spring-cloud-starter-eureka')
-	compile('io.jsonwebtoken:jjwt:0.6.0')
-	compile('com.auth0:java-jwt:3.2.0')
-	compile('org.projectlombok:lombok:1.16.18')
-	
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
-}
+project(':jwt-dto') {
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	version = '0.0.1-SNAPSHOT'
+	
+	dependencies {
+		
+		compile 	('com.fasterxml.jackson.core:jackson-annotations:2.9.0')
+		
 	}
+
 }
-
-
