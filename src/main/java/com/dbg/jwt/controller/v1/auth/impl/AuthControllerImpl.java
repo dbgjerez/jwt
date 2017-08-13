@@ -31,9 +31,7 @@ public class AuthControllerImpl implements AuthController {
 	@Override
 	public StatusDTO validate(HttpServletRequest request) {
 		final String header = request.getHeader("Authorization");
-		System.out.println(header);
 		final Boolean validateToken = jwtService.validateToken(header);
-		System.out.println(validateToken);
 		return new StatusDTO();
 	}
 
