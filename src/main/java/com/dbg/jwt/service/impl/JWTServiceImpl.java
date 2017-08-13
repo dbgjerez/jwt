@@ -64,12 +64,8 @@ public class JWTServiceImpl implements JWTService {
 	public Boolean validateToken(String token) {
 		final Claims claims = extractClaims(token);
 		final Date exp = claims.get(Claims.EXPIRATION, Date.class);
-		final LocalDateTime expAt = extractLocalDateTime(exp);
-		return LocalDateTime.now().isBefore(expAt);
-	}
-
-	private LocalDateTime extractLocalDateTime(Date d) {
-		return LocalDateTime.ofInstant(d.toInstant(), DEFAULT_ZONEID);
+		final LocalDateTime expAt = dateService.toLocalDateTime(exp);
+		return dateService.now().isBefore(expAt);
 	}
 
 	private Claims extractClaims(String token) {
