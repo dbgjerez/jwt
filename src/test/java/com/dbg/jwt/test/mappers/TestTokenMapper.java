@@ -16,7 +16,7 @@ public class TestTokenMapper {
 	@Test
 	public void testMapperToken() {
 		final GenerateTokenDTO tk = tokenMapper.map(TOKEN);
-		Assert.assertEquals(tk.getAccesstToken(), TOKEN);
+		Assert.assertEquals(tk.getAccessToken(), TOKEN);
 	}
 
 }

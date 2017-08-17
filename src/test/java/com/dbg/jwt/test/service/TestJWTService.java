@@ -67,7 +67,7 @@ public class TestJWTService {
 		final GenerateTokenDTO res = service.loginUser(login);
 
 		Assert.assertNotNull(res);
-		Assert.assertEquals(res.getAccesstToken(), TOKEN);
+		Assert.assertEquals(res.getAccessToken(), TOKEN);
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class TestJWTService {
 
 		final GenerateTokenDTO tk = service.loginUser(login);
 
-		final Boolean validation = service.validateToken(tk.getAccesstToken());
+		final Boolean validation = service.validateToken(tk.getAccessToken());
 		Assert.assertTrue(validation);
 	}
 
