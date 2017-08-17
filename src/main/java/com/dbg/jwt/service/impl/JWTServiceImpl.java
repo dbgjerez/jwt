@@ -18,8 +18,10 @@ import com.dbg.jwt.service.LocalDateTimeService;
 import com.dbg.jwt.service.UserService;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 
 @Service
 public class JWTServiceImpl implements JWTService {
@@ -61,7 +63,7 @@ public class JWTServiceImpl implements JWTService {
 	}
 
 	@Override
-	public Boolean validateToken(String token) {
+	public Boolean validateToken(String token) throws ExpiredJwtException, SignatureException {
 		final Claims claims = extractClaims(token);
 		final Date exp = claims.get(Claims.EXPIRATION, Date.class);
 		final LocalDateTime expAt = dateService.toLocalDateTime(exp);
