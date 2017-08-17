@@ -36,7 +36,7 @@ public class TestAuthController {
 
 	@Before
 	public void init() {
-		mockMvc = MockMvcBuilders.standaloneSetup(controller).setControllerAdvice(V1ControllerAdvice.class).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(controller).setControllerAdvice(new V1ControllerAdvice()).build();
 	}
 
 	@Test
