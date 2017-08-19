@@ -18,6 +18,7 @@ import com.dbg.jwt.controller.v1.auth.AuthController;
 import com.dbg.jwt.controller.v1.auth.impl.AuthControllerImpl;
 import com.dbg.jwt.dto.GenerateTokenDTO;
 import com.dbg.jwt.dto.LoginDTO;
+import com.dbg.jwt.dto.ValidTokenDTO;
 import com.dbg.jwt.exceptions.InvalidRequestException;
 import com.dbg.jwt.exceptions.InvalidUserException;
 import com.dbg.jwt.service.JWTService;
@@ -31,6 +32,7 @@ public class TestAuthController {
 
 	private static final String ACCESS = "ACCESS";
 	private static final String JSON_KO = "{\"email\":\"KO\",\"password\":\"KO\"}";
+	private static final String USERNAME = "OK";
 
 	private MockMvc mockMvc;
 
@@ -85,6 +87,16 @@ public class TestAuthController {
 		mockMvc.perform(MockMvcRequestBuilders.post("/v1/auth").contentType(ContentType.APPLICATION_JSON.getMimeType())
 				.content("{\"email\":\"KO\",\"password\":\"KO\"}")).andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.accessToken", org.hamcrest.core.Is.is(ACCESS)));
+	}
+
+	@Test
+	public void testTokenValidationOk() throws Exception {
+		Mockito.when(requestService.extractToken(Mockito.any())).thenReturn(ACCESS);
+		Mockito.when(jwtService.validateToken(ACCESS)).thenReturn(new ValidTokenDTO(USERNAME));
+		mockMvc.perform(
+				MockMvcRequestBuilders.get("/v1/auth/validate").contentType(ContentType.APPLICATION_JSON.getMimeType()))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.username", org.hamcrest.core.Is.is(USERNAME)));
 	}
 
 	private GenerateTokenDTO createTokenDTO() {
