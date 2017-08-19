@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.dbg.jwt.dto.MessageDTO;
+import com.dbg.jwt.exceptions.InvalidRequestException;
 import com.dbg.jwt.exceptions.InvalidUserException;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -36,6 +37,12 @@ public class V1ControllerAdvice {
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler(SignatureException.class)
 	public MessageDTO signatureException(SignatureException e) {
+		return new MessageDTO(ERROR_SIGNATURE);
+	}
+
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ExceptionHandler(SignatureException.class)
+	public MessageDTO signatureException(InvalidRequestException e) {
 		return new MessageDTO(ERROR_SIGNATURE);
 	}
 
