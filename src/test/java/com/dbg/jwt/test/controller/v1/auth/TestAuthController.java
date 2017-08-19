@@ -18,13 +18,19 @@ import com.dbg.jwt.controller.v1.auth.AuthController;
 import com.dbg.jwt.controller.v1.auth.impl.AuthControllerImpl;
 import com.dbg.jwt.dto.GenerateTokenDTO;
 import com.dbg.jwt.dto.LoginDTO;
+import com.dbg.jwt.exceptions.InvalidRequestException;
 import com.dbg.jwt.exceptions.InvalidUserException;
 import com.dbg.jwt.service.JWTService;
+import com.dbg.jwt.service.ServletRequestService;
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestAuthController {
 
 	private static final String ACCESS = "ACCESS";
+	private static final String JSON_KO = "{\"email\":\"KO\",\"password\":\"KO\"}";
 
 	private MockMvc mockMvc;
 
@@ -34,16 +40,42 @@ public class TestAuthController {
 	@Mock
 	private JWTService jwtService;
 
+	@Mock
+	private ServletRequestService requestService;
+
 	@Before
 	public void init() {
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).setControllerAdvice(new V1ControllerAdvice()).build();
 	}
 
 	@Test
-	public void testTokenKo() throws Exception {
+	public void testTokenKoInvalidUserException() throws Exception {
 		Mockito.when(jwtService.loginUser(new LoginDTO("KO", "KO"))).thenThrow(InvalidUserException.class);
 		mockMvc.perform(MockMvcRequestBuilders.post("/v1/auth").contentType(ContentType.APPLICATION_JSON.getMimeType())
-				.content("{\"email\":\"KO\",\"password\":\"KO\"}"))
+				.content(JSON_KO)).andExpect(MockMvcResultMatchers.status().isUnauthorized());
+	}
+
+	@Test
+	public void testTokenKoExpiredJwtException() throws Exception {
+		Mockito.when(jwtService.validateToken(Mockito.any())).thenThrow(ExpiredJwtException.class);
+		mockMvc.perform(MockMvcRequestBuilders.get("/v1/auth/validate")
+				.contentType(ContentType.APPLICATION_JSON.getMimeType()).content(JSON_KO))
+				.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+	}
+
+	@Test
+	public void testTokenKoSignatureException() throws Exception {
+		Mockito.when(jwtService.validateToken(Mockito.any())).thenThrow(SignatureException.class);
+		mockMvc.perform(MockMvcRequestBuilders.get("/v1/auth/validate")
+				.contentType(ContentType.APPLICATION_JSON.getMimeType()).content(JSON_KO))
+				.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+	}
+
+	@Test
+	public void testTokenKoInvalidRequestException() throws Exception {
+		Mockito.when(requestService.extractToken(Mockito.any())).thenThrow(new InvalidRequestException());
+		mockMvc.perform(MockMvcRequestBuilders.get("/v1/auth/validate")
+				.contentType(ContentType.APPLICATION_JSON.getMimeType()).content(JSON_KO))
 				.andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	}
 
