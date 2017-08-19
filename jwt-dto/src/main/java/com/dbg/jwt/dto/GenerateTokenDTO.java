@@ -12,6 +12,6 @@ public class GenerateTokenDTO implements Serializable {
 	private static final long serialVersionUID = -1857087699760304240L;
 
 	@JsonAlias("access_token")
-	private String accesstToken;
+	private String accessToken;
 
 }

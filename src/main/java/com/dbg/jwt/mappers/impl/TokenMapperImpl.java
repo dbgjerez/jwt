@@ -11,7 +11,7 @@ public class TokenMapperImpl implements TokenMapper {
 	@Override
 	public GenerateTokenDTO map(String token) {
 		final GenerateTokenDTO res = new GenerateTokenDTO();
-		res.setAccesstToken(token);
+		res.setAccessToken(token);
 		return res;
 	}
 
