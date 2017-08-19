@@ -16,6 +16,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.dbg.jwt.dto.GenerateTokenDTO;
 import com.dbg.jwt.dto.LoginDTO;
+import com.dbg.jwt.dto.ValidTokenDTO;
 import com.dbg.jwt.exceptions.InvalidUserException;
 import com.dbg.jwt.mappers.TokenMapper;
 import com.dbg.jwt.mappers.impl.TokenMapperImpl;
@@ -35,7 +36,8 @@ public class TestJWTService {
 	private static final String SECRET = "test";
 	private static final String EMAIL = "test@test.com";
 	private static final String PASS = "pass";
-	private static final String TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjk0NjcyNDQwMCwiZXhwIjo5NDY3MjQ0NjB9.tIRYmvjmn7kKq5o0PhRdTfmMpCzzZhCXwNayIENzsVo";
+	private static final String USERNAME = "Nombre";
+	private static final String TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOb21icmUiLCJpYXQiOjk0NjcyNDQwMCwiZXhwIjo5NDY3MjQ0NjB9.wxwwvsk44-NvvXnI6K2tVOuE72vgNzmiCZD8RQw2eEs";
 	private static final String TOKEN_INVALID = "eyJhbGciOiJIUzI1NiJ9.EyJpYXQiOjk0NjcyNDQwMCwiZXhwIjo5NDY3MjQ0NjB9.tIRYmvjmn7kKq5o0PhRdTfmMpCzzZhCXwNayIENzsVo";
 	private static final Integer EXPIRATION = 60;
 	private static final LocalDateTime DATE = LocalDateTime.of(2000, 01, 01, 12, 00);
@@ -80,8 +82,8 @@ public class TestJWTService {
 
 		final GenerateTokenDTO tk = service.loginUser(login);
 
-		final Boolean validation = service.validateToken(tk.getAccessToken());
-		Assert.assertTrue(validation);
+		final ValidTokenDTO validation = service.validateToken(tk.getAccessToken());
+		Assert.assertEquals(USERNAME, validation.getUsername());
 	}
 
 	@Test(expected = ExpiredJwtException.class)
@@ -97,6 +99,7 @@ public class TestJWTService {
 	private User createUser(String email, String pass) {
 		final User u = new User();
 		u.setEmail(email);
+		u.setUsername(USERNAME);
 		u.setPassword(pass);
 		return u;
 	}

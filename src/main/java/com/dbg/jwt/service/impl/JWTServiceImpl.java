@@ -2,7 +2,6 @@ package com.dbg.jwt.service.impl;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.dbg.jwt.dto.GenerateTokenDTO;
 import com.dbg.jwt.dto.LoginDTO;
+import com.dbg.jwt.dto.ValidTokenDTO;
 import com.dbg.jwt.exceptions.InvalidUserException;
 import com.dbg.jwt.mappers.TokenMapper;
 import com.dbg.jwt.model.user.User;
@@ -63,11 +63,9 @@ public class JWTServiceImpl implements JWTService {
 	}
 
 	@Override
-	public Boolean validateToken(String token) throws ExpiredJwtException, SignatureException {
+	public ValidTokenDTO validateToken(String token) throws ExpiredJwtException, SignatureException {
 		final Claims claims = extractClaims(token);
-		final Date exp = claims.get(Claims.EXPIRATION, Date.class);
-		final LocalDateTime expAt = dateService.toLocalDateTime(exp);
-		return dateService.now().isBefore(expAt);
+		return new ValidTokenDTO(claims.getSubject());
 	}
 
 	private Claims extractClaims(String token) {
