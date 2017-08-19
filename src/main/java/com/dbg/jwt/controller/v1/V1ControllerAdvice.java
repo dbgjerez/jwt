@@ -41,7 +41,7 @@ public class V1ControllerAdvice {
 	}
 
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
-	@ExceptionHandler(SignatureException.class)
+	@ExceptionHandler(InvalidRequestException.class)
 	public MessageDTO signatureException(InvalidRequestException e) {
 		return new MessageDTO(ERROR_SIGNATURE);
 	}
