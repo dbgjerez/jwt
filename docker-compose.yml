@@ -1,0 +1,9 @@
+mongo:
+  image: mongo:3.4
+  ports:
+    - "27017:27017"
+
+ms-jwt:
+  build: .
+  ports:
+    - "8081:8081"
