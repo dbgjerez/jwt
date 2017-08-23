@@ -1,9 +1,21 @@
-mongo:
+mongodb:
   image: mongo:3.4
   ports:
-    - "27017:27017"
+    - 27017:27017
+
+eureka:
+  image: b0rr3g0/eureka:0.1
+  ports:
+    - 8761:8761
 
 ms-jwt:
   build: .
   ports:
-    - "8081:8081"
+    - 8081:8081
+  links:
+    - mongodb
+    - eureka
+  environment:
+    SPRING_DATA_MONGODB_URI: mongodb://mongodb/jwt
+    SPRING_APPLICATION_NAME: JWT
+    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
