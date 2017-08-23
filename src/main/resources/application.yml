@@ -10,16 +10,7 @@ spring:
 # MONGODB (MongoProperties)
   data:
     mongodb:
-      #authentication-database: # Authentication database name.
-      database: test # Database name.
-      #field-naming-strategy: # Fully qualified name of the FieldNamingStrategy to use.
-      #grid-fs-database= # GridFS database name.
-      host: localhost # Mongo server host. Cannot be set with uri.
-      #password: # Login password of the mongo server. Cannot be set with uri.
-      port: 27017 # Mongo server port. Cannot be set with uri.
-      #repositories.enabled=true # Enable Mongo repositories.
-      #spring.data.mongodb.uri=mongodb://localhost/test # Mongo database URI. Cannot be set with host, port and credentials.
-      #spring.data.mongodb.username= # Login user of the mongo server. Cannot be set with uri.
+      uri: mongodb://localhost/jwt
 # Discovery Server Access
 eureka:
   client:
