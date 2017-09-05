@@ -9,7 +9,7 @@ eureka:
     - 8761:8761
 
 ms-jwt:
-  build: .
+  image: b0rr3g0/jwt:latest
   ports:
     - 8081:8081
   links:
