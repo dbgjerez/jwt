@@ -74,7 +74,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    'com/dbg/jwt/model/**', 'com.dbg.jwt.JwtApplication.java'
+                    'com/dbg/jwt/model/**', 'com/dbg/jwt/JwtApplication**'
             ])
         })
     }
