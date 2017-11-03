@@ -1,17 +1,14 @@
 node {
+	def server = Artifactory.newServer
 	def gradle = Artifactory.newGradleBuild()
-	def info
+	def info = Artifactory.newBuildInfo()
 
 	stage('Pull') { 
 		checkout scm
 	}
 	
-   	stage('Configuración') {
-		gradle.tool = "Gradle-4.4"
+   	stage('Build') {
+		gradle.run rootDir: '', buildFile: 'build.gradle', tasks: 'clean build', buildInfo: info
    	}
-	
-	stage('Build'){
-		gradle.run buildFile: 'build.gradle', tasks: 'clean', buildInfo: info		
-	}
 
 }
