@@ -1,5 +1,5 @@
 node {
-	def server = Artifactory.newServer
+	def server = Artifactory.server('ARTIFACTORY')
 	def gradle = Artifactory.newGradleBuild()
 	def info = Artifactory.newBuildInfo()
 
