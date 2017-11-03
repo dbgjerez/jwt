@@ -15,4 +15,8 @@ node {
 		gradle.run rootDir: '', buildFile: 'build.gradle', tasks: 'clean build', buildInfo: info
    	}
 
+	stage ('Publicar') {
+            server.publishBuildInfo info
+        }
+
 }
