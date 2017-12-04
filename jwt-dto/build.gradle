@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+jar {
+	baseName = 'jwt-dto'
+}
+
+repositories { 
+	mavenCentral() 
+}
+	
+dependencies {
+	compile         ('com.fasterxml.jackson.core:jackson-annotations:2.9.2')
+	compile         ('org.projectlombok:lombok:1.16.18')
+}
